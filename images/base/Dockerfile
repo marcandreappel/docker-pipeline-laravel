@@ -1,4 +1,3 @@
-FROM php:7.4.0
-RUN apt-get update && apt-get install -y unzip sqlite3 \
-	&& docker-php-ext-install bcmath pcntl pdo_sqlite \
-	&& curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+FROM alpine:latest
+RUN apk update \
+	&& apk add curl git php7 php7-zip php7-mcrypt php7-bcmath php7-pcntl sqlite php7-pdo_sqlite php7-xml composer
