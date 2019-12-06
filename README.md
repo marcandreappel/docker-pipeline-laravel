@@ -13,7 +13,6 @@ pipelines:
     - step:
         script:
         - curl -so phing.phar https://www.phing.info/get/phing-latest.phar
-        - php phing.phar -f "build.xml" build
+        - php artisan ...
 ```
 
-Phing needs to be downloaded inside the script part.
