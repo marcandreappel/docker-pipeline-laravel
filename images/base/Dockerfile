@@ -15,8 +15,7 @@ RUN apk update \
 	&& apk add git curl libmcrypt-dev mariadb-client libzip-dev zstd-dev autoconf libc-dev gcc make \
 	&& docker-php-ext-install pdo_mysql pcntl bcmath zip \
 	&& pecl update-channels \
-	&& yes | pecl install mcrypt igbinary redis \
-	&& docker-php-ext-enable redis
+	&& yes | pecl install mcrypt
 
 EXPOSE 9000
 CMD ["php-fpm"]
