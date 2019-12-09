@@ -1,4 +1,21 @@
-FROM alpine:latest
+FROM php:fpm-alpine
+
+LABEL org.label-schema.schema-version="1.0" \
+    org.label-schema.vendor="Marc-André Appel <marc-andre@appel.fun>" \
+    org.label-schema.name="marcandreappel/docker-pipeline-laravel" \
+    org.label-schema.description="A Bitbucket Pipeline PHP Docker Image" \
+    org.label-schema.url="https://hub.docker.com/r/marcandreappel/docker-pipeline-laravel" \
+    org.label-schema.build-date=$DATE \
+    org.label-schema.version="$VERSION" \
+    org.label-schema.vcs-url="$URL" \
+    org.label-schema.vcs-branch="$BRANCH" \
+    org.label-schema.vcs-ref="$COMMIT"
+
 RUN apk update \
-	&& apk add curl git php7 php7-zip php7-mcrypt php7-bcmath php7-pcntl sqlite php7-pdo_sqlite php7-xml \\
-	php7-tokenizer composer
+	&& apk add git curl libmcrypt-dev mariadb-client libzip-dev zstd-dev autoconf libc-dev gcc make \
+	&& docker-php-ext-install pdo_mysql pcntl bcmath zip \
+	&& pecl update-channels \
+	&& yes | pecl install mcrypt igbinary redis
+
+EXPOSE 9000
+CMD ["php-fpm"]
